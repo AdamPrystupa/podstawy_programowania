@@ -1,0 +1,5 @@
+1. Sprawdzanie numeru magicznego
+2. Sprawdzanie uchwytu do pliku
+3. Sprawdzanie czy obraz nie jest pusty
+4. Sprawdzanie poprawności nazwy pliku
+5. Sprawdzanie poprawności wyboru opcji z menu
