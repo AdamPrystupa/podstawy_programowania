@@ -1,0 +1,14 @@
+Zmiana poziomów:
+1. Skorzystaj z funkcji odczyt.c
+2. Dla każdego elementu tablicy dwuwymiarowej "obraz" wykonaj porównianie z dwoma parametrami BIEL i CZERN.
+3. Dla każdego elemnetu tablicy dwuwymiarowej "obraz" o wartości jasności mniejszej lub równej CZERN przypisz wartość 0.
+4. Dla każdego elementu tablicy dwuwymiarowej "obraz" o wartości jasności większych lub równej BIEL przypisz maksymalną wartość szarości.
+5. Dla każdego elementu tablicy dwuwymiarowej "obraz" o wartości zawierającej się między BIEL i CZERN zastosuj wzór ((wartość[][])-CZERN)*maksymalny stopień szarości/(BIEL-CZERN).
+6. Zapisz tablicę do pliku o rozszerzeniu .pgm
+
+Rozciągnięcie histogramu:
+1. Skorzystaj z funkcji odczyt.c
+2. Odnajdz maksymalny i minmalny poziom szarości dla danego obrazu.
+3. Znajdz w tablicy dwuwymiarowej "obraz" wartości rzeczywiste maksymalnego i minimalnego poziomu jasności.
+4. Do każdego elementu tablicy dwuwymiarowej "obraz" zastosuj wzór nowa_wartość=(stara_wartość-minimalny_rzeczywisty_poziom_jasności)*maksymalny_poziom_jasności/(maksymalny_rzeczywisty_poziom_jasności-minimalny_rzeczywisty_poziom_jasności).
+5. Zapisz tablicę do pliku o rozszerzeniu .pgm

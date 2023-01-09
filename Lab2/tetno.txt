@@ -1,0 +1,42 @@
+Algorytm:
+
+1. Wczytujemy dane w formacie:
+- zz:yy:xx.xxx pp.pp (odpowiednio:
+godziny:minuty:sekundy wartość w postaci dziesiętnej).
+- [yy'] xx.xx pp.pp ([minuty] sekundy ...).
+2. Przyjmujemy wartość 99 jako koniec strumienia danych.
+3. Sprawdzamy poprawność danych (format, typ, wartości należące do
+zakresu algorytmu <-10,10>). W razie nieprawidłowości wyświetlamy odpowiedni komunikat.
+4. Dla każdego strumienia danych (okres 10s) zliczamy ilość przecięć
+osi x-ów.
+5. Jeśli ilość "miejsc zerowych" dla danego strumienia wartości nie
+zawiera się w przedziale <8,14> dany strumień uznajemy za niepoprawny
+i wyświetlamy komunikat. Dla wartości zawierających się w przedziale
+<8,14> nie wyświetlamy żadnego komunikatu.
+
+Warunek stopu algorytmu:
+
+Jako warunek stopu naszego algorytmu możemy przyjąć pierwszy pusty
+wiersz jaki pojawi się w danych wejściowych.
+
+Sposób testowania algorytmu:
+
+Aby przetestować algorytm możemy sporządzić plik zawierający dawne
+wejściowe, które wcześniej dobraliśmy w taki sposób, aby sprawdzić
+wszystkie warunki zawarte wcześniej w algorytmie np. podając wartości
+spoza przedziału <-10,10> itp. Oprócz tego ręcznie policzyć i ustalić
+dane wyjściowe jakie algorytm powinien zwracać i porównać je, z tymi
+które algorytm faktycznie nam zwróci.
+
+Stałe symboliczne:
+
+#define min_wartosc -10 //minimalna wartość
+#define max_wartosc 10	//maksymalna warość
+#define koniec_strumienia 99 //koniec strumienia (pomiaru- 10s)
+#define min_czestotliwosc 8 //minimalna częstotliwość
+#define max_czestotliwosc 14 //maksymalna częstotliwość
+
+Zmienne:
+
+float p; //wartość pomiaru
+float freq; //częstotliwość po obliczeniu

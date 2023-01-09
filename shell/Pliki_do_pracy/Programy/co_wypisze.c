@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+int main()
+{
+  int i = 4;
+  //co wypisze??/
+  while (i > 0)
+    {
+      printf("%d",i);
+      --i;
+    }
+}
