@@ -1,0 +1,26 @@
+/*Przydzielanie dynamiczne pamieci w zaleznosci od formatu pliku*/
+    if(obrazek->nr_magiczny==2)/*obrazek pgm*/
+    {
+        obrazek->piksele=(int**)malloc(obrazek->wym_y*sizeof(int*));
+        for (i=0;i<obrazek->wym_y;i++)
+        obrazek->piksele[i]=(int*)malloc(obrazek->wym_x*sizeof(int*));
+        
+    if(obrazek->piksele==NULL) /*Sprawdzenie powodzenia przydzielania pamieci*/
+    {
+        fprintf(stderr,"BLAD: Niepowodzenie przy przydzielaniu pamieci!\n");
+        return 0;
+    }
+    }
+
+    if(obrazek->nr_magiczny==3)/*obrazek ppm*/
+    {
+        obrazek->piksele=(int**)malloc(obrazek->wym_y*sizeof(int*));
+        for(i=0;i<obrazek->wym_y;i++)
+        obrazek->piksele[i]=(int**)malloc(obrazek->wym_x*3*sizeof(int*));
+        
+    if(obrazek->piksele==NULL) /*Sprawdzenie powodzenia przydzielania pamieci*/
+    {
+        fprintf(stderr,"BLAD: Niepowodzenie przy przydzielaniu pamieci!\n");
+        return 0;
+    }
+    }
