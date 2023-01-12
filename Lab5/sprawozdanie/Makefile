@@ -1,15 +1,19 @@
 $(CC) = gcc
 
-przetwarzanie2: main.o funkcje.o przetwarzaj_opcje.o
-			$(CC) main.o funkcje.o przetwarzaj_opcje.o -o przetwarzanie2
+przetwarzanie2: main.o przetwarzanie.o opcje.o obsluga.o funkcje.h
+			$(CC) main.o przetwarzanie.o opcje.o -o przetwarzanie2
 main.o: main.c funkcje.h
 		$(CC) -c main.c 
 
-funkcje.o: funkcje.c funkcje.h
-		$(CC) -c funkcje.c 
+przetwarzanie.o: przetwarzanie.c funkcje.h
+		$(CC) -c przetwarzanie.c 
 
-przetwarzaj_opcje.o: przetwarzaj_opcje.c funkcje.h
-		$(CC) -c funkcje.c 
+opcje.o: opcje.c funkcje.h
+		$(CC) -c opcje.c
+
+obsluga.o: obsluga.c funkcje.h
+		$(CC) -c obsluga.c
+
 
 clean: 
 		rm *.o przetwarzanie2

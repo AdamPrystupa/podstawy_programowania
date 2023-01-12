@@ -4,69 +4,202 @@
 #include<math.h>
 #include "funkcje.h"
 
-#define MAX 1024        /* Maksymalny rozmiar wczytywanego obrazu */
-#define DL_LINII 2048     /* Dlugosc buforow pomocniczych */
+#define MAX 2048        /* Maksymalny rozmiar wczytywanego obrazu */
+#define DL_LINII 1024    /* Dlugosc buforow pomocniczych */
 #define W_OK 0                   /* wartosc oznaczajaca brak bledow */
 #define B_NIEPOPRAWNAOPCJA -1    /* kody bledow rozpoznawania opcji */
 #define B_BRAKNAZWY   -2
 #define B_BRAKWARTOSCI  -3
 #define B_BRAKPLIKU   -4
 
-typedef struct 
+
+
+/************************************************************************************
+ * Funkcja wczytuje obraz z podanego pliku do tablicy                               *                                              *
+ *                                                                                  *
+ * \param[out] piksele  tablica, do ktorej zostanie zapisany obraz                  *
+ * \param[out] wym_x  szerokosc obrazka                                             *
+ * \param[out] wym_y  wysokosc obrazka                                              *
+ * \param[out] szarosci  liczba odcieni szarosci                                    *
+ * \return liczba wczytanych pikseli                                                *
+ ************************************************************************************/
+int czytaj(t_opcje *opcje, struct_obrazka *obrazek)
 {
-    int nr_magiczny;
-    int wym_x, wym_y, szarosci;
-    void *piksele;
-}struct_obrazka;
-
-int czytaj(FILE *plik_we, struct_obrazka *obraz){
-      char buf[DL_LINII];      /* bufor pomocniczy do czytania naglowka i komentarzy */
-  int znak;                /* zmienna pomocnicza do czytania komentarzy */
-  int koniec=0;            /* czy napotkano koniec danych w pliku */
-  int i,j;
-
-  /*Sprawdzenie czy podano prawid�owy uchwyt pliku */
-  if (plik_we==NULL) {
-    printf("Blad: Nie podano uchwytu do pliku\n");
-    return(0);
-  }
-
-  /* Sprawdzenie "numeru magicznego" - powinien by� P2 */
-  if (fgets(buf,DL_LINII,plik_we)==NULL)   /* Wczytanie pierwszej linii pliku do bufora */
-    koniec=1;                              /* Nie udalo sie? Koniec danych! */
-
-  if ( (buf[0]=='P') && ((buf[1]=='2') ||( buf[1]=='3'))) {  /*Sprawdzamy format*/
+    char nazwa[DL_LINII]; /*bufor do czytania nazwy pliku*/
+    char bufor[DL_LINII]; /*bufor pomocniczy do czytania komentarzy i naglowka*/
+    int znak; /*zmienna pomocnicza do komentarzy*/
+    int koniec=0; /*zmienna pomocna w szukaniu konca danych*/
+    int i,j,k; /*zmienne pomocnicze petli*/
     
-    if (buf[1]=='2') struct_obrazka->nr_magiczny=2;
-    else if (buf[1]=='3') struct_obrazka->nr_magiczny=3;
-    return(0);
-  }
-  else printf()
-
-  /* Pominiecie komentarzy */
-  do {
-    if ((znak=fgetc(plik_we))=='#') {         /* Czy linia rozpoczyna sie od znaku '#'? */
-      if (fgets(buf,DL_LINII,plik_we)==NULL)  /* Przeczytaj ja do bufora                */
-	koniec=1;                   /* Zapamietaj ewentualny koniec danych */
-    }  else {
-      ungetc(znak,plik_we);                   /* Gdy przeczytany znak z poczatku linii */
-    }                                         /* nie jest '#' zwroc go                 */
-  } while (znak=='#' && !koniec);   /* Powtarzaj dopoki sa linie komentarza */
-                                    /* i nie nastapil koniec danych         */
-
-  /* Pobranie wymiarow obrazu i liczby odcieni szarosci */
-  if (fscanf(plik_we,"%d %d %d",wymx,wymy,szarosci)!=3) {
-    printf("Blad: Brak wymiarow obrazu lub liczby stopni szarosci\n");
-    return(0);
-  }
-  /* Pobranie obrazu i zapisanie w tablicy obraz_pgm*/
-  for (i=0;i<*wymy;i++) {
-    for (j=0;j<*wymx;j++) {
-      if (fscanf(plik_we,"%d",&(obraz_pgm[i][j]))!=1) {
-	printf("Blad: Niewlasciwe wymiary obrazu\n");
-	return(0);
-      }
+    /*Warunek poprawnego uchwytu do pliku*/
+    if (opcje->plik_we==NULL)
+    {
+        fprintf(stderr,"BLAD: Niepoprawny uchwyt do pliku!\n");
+        return 0;
     }
-  }
-  return *wymx**wymy;   /* Czytanie zakonczone sukcesem    */
+    else
+    {
+        /*Sprawdzenie numeru magicznego*/
+        if(fgets(bufor,DL_LINII,opcje->plik_we)==NULL) 
+        koniec=1; 
+        else
+        {if(bufor[0]!='P'||bufor[1]!='2'&& bufor[1]!='3'||koniec) 
+        {
+            fprintf(stderr,"BLAD: Ten plik nie jest formatu PGM ani PPM (nie jest obslugiwany)\n");
+            return 0;
+        }
+        else
+        {/*Zapisanie formatu pliku w zaleznosci od nr magicznego*/
+            if(bufor[1]=='2')
+            obrazek->nr_magiczny=2;
+            printf("nr magiczny 2");
+            
+            if(bufor[1]=='3')
+            obrazek->nr_magiczny=3;
+            printf("nr magiczny 3");
+            
+        }
+        
+    }
+
+    /*Pomijanie zbednych komentarzy*/
+    do
+    {
+        if((znak=fgetc(opcje->plik_we))=='#') /*Sprawdzenie czy linia jest komentarzem (znak "#")*/
+        {
+            if(fgets(bufor,DL_LINII,opcje->plik_we)==NULL)
+            koniec=1;
+            else
+            {
+                ungetc(znak,opcje->plik_we);
+            }
+        }
+    } while (znak=='#'|| !koniec); /*Rob dopoki sa komentarze i nie nastapil koniec danych*/
+    
+    /*Wczytanie wymiarow obrazka */
+    if(fscanf(opcje->plik_we,"%d %d %d",&obrazek->wym_x,&obrazek->wym_y,&obrazek->szarosci)!=3)
+    {
+        fprintf(stderr,"BLAD: Brak jednego z parametrow: wysokosc, szerokosc, ilosc stopni szarosci!\n");
+        return 0;
+    }
+    
+/*Przydzielanie dynamiczne pamieci w zaleznosci od formatu pliku*/
+    if(obrazek->nr_magiczny==2)/*obrazek pgm*/
+    {
+        obrazek->piksele=(int**)malloc(obrazek->wym_y*sizeof(int*));
+        for (i=0;i<obrazek->wym_y;i++)
+        obrazek->piksele[i]=(int*)malloc(obrazek->wym_x*sizeof(int*));
+        
+    if(obrazek->piksele==NULL) /*Sprawdzenie powodzenia przydzielania pamieci*/
+    {
+        fprintf(stderr,"BLAD: Niepowodzenie przy przydzielaniu pamieci!\n");
+        return 0;
+    }
+    }
+
+    if(obrazek->nr_magiczny==3)/*obrazek ppm*/
+    {
+        obrazek->piksele=(int**)malloc(obrazek->wym_y*sizeof(int*));
+        for(i=0;i<obrazek->wym_y;i++)
+        obrazek->piksele[i]=(int*)malloc(obrazek->wym_x*3*sizeof(int*));
+        
+    if(obrazek->piksele==NULL) /*Sprawdzenie powodzenia przydzielania pamieci*/
+    {
+        fprintf(stderr,"BLAD: Niepowodzenie przy przydzielaniu pamieci!\n");
+        return 0;
+    }
+    }
+
+    /*Zapelnienie przydzielonej pamieci wczytywanym obrazem*/
+    if(obrazek->nr_magiczny==2)/*obrazek pgm*/
+    {
+        for(j=0;j<obrazek->wym_y;j++)
+        {
+            for(k=0;k<obrazek->wym_x;k++)
+            {
+                if(fscanf(opcje->plik_we,"%d",&obrazek->piksele[j][k])!=1)
+                {
+                    fprintf(stderr,"BLAD: Niepoprawne wymiary obrazka\n");
+                    return 0;
+                }
+            }
+        }
+    }
+
+    if(obrazek->nr_magiczny==3)/*obrazek ppm*/
+    {
+        for(j=0;j<obrazek->wym_y;j++)
+        {
+            for(k=0;k<obrazek->wym_x*3;k++)
+            {
+                if(fscanf(opcje->plik_we,"%d",&obrazek->piksele[j][k])!=1)
+                {
+                    fprintf(stderr,"BLAD: Niepoprawne wymiary obrazka\n");
+                    return 0;
+                }
+            }
+        }
+    }
+
+return (obrazek->wym_x)*(obrazek->wym_y);/*Poprawnie wykonano operacje wczytywania, zwracamy liczbe wczytanych pikseli*/
+}
+}
+
+
+
+
+/************************************************************************************
+ * Funkcja zapisuje obraz z tablicy do podanego pliku                               *                                              *
+ *                                                                                  *
+ * \param[in] piksele  tablica, do ktorej zostanie zapisany obraz                  *
+ * \param[in] wym_x  szerokosc obrazka                                             *
+ * \param[in] wym_y  wysokosc obrazka                                              *
+ * \param[in] szarosci  liczba odcieni szarosci                                    *
+ * \return liczba wczytanych pikseli                                                *
+ ************************************************************************************/
+int zapisz(t_opcje *opcje,struct_obrazka *obrazek)
+{
+    char word [DL_LINII]; /*bufor do wydawania polecen terminalowi*/
+    int i,j;
+
+    /*zapisanie na poczatku pliku nr_magicznego, wymiarow, szarosci i ewentualnych komentarzy*/
+    fprintf(opcje->plik_wy, "P%d\n", obrazek->nr_magiczny);
+    fprintf(opcje->plik_wy, "# Plik formatowany poprzez program PRZETWARZANIE\n");
+    fprintf(opcje->plik_wy, "%d %d\n", obrazek->wym_x, obrazek->wym_y);
+
+    /*zapis kolenych pikseli*/
+    if(obrazek->nr_magiczny==2) /*dla formatu .pgm*/
+    {
+        for(i=0; i<obrazek->wym_y; i++)
+        {
+            for(j=0; j<obrazek->wym_x; j++)
+            {
+                fprintf(opcje->plik_wy, "%d", obrazek->piksele[i][j]);
+            }       
+        }
+    }
+
+    if(obrazek->nr_magiczny==3) /*dla formatu .ppm*/
+    {
+        for(i=0; i<obrazek->wym_y; i++)
+        {
+            for(j=0; j<obrazek->wym_x*3; j++)
+            {
+                fprintf(opcje->plik_wy, "%d", obrazek->piksele[i][j]);
+            }       
+        }
+    }
+
+
+}
+
+/* Wyswietlenie obrazu o zadanej nazwie za pomoca programu "display"   */
+void wyswietl(t_opcje *opcje) 
+{
+char word [DL_LINII]; /*bufor do wydawania polecen terminalowi*/
+    strcpy(word,"display ");  /* konstrukcja polecenia postaci */
+    strcat(word,opcje->plik_we);  
+    strcat(word," &");
+    system(word);             /* wykonanie polecenia        */
+  
 }
