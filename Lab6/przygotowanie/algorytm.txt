@@ -1,0 +1,17 @@
+1. Inicjalizacja pustego stosu.
+2. Czytanie danych wejściowych ze standardowego wejścia.
+    - Jeśli dane wejściowe to liczba, umieszczenie jej na początku listy argumentów (stosu).
+    - Jeśli dane wejściowe to symbol operacji (+, -, *, /, P, c, r, d, p, f):
+    - Jeśli symbol to P, usunięcie ostatnio wprowadzonej liczby ze szczytu stosu.
+    - Jeśli symbol to c, usunięcie wszystkich elementów ze stosu.
+    - Jeśli symbol to r, zamiana miejscami dwóch argumentów na szczycie stosu.
+    - Jeśli symbol to d, zduplikowanie argumentu znajdującego się na szczycie stosu.
+    - Jeśli symbol to p, wydrukowanie szczytu stosu.
+    - Jeśli symbol to f, wydrukowanie zawartości całego stosu.
+    - Jeśli symbol to (+, -, *, /),
+        -- Sprawdzenie czy na stosie znajdują się co najmniej dwa elementy
+        -- Pobranie dwóch elementów z początku listy (stosu)
+        -- Wykonanie na nich odpowiedniego działania (+, -, *, /)
+        -- Umieszczenie wyniku na początku listy (stosu)
+3. Powtarzanie kroków 2-4, aż do końca danych wejściowych.
+4. Zakończenie działania programu.

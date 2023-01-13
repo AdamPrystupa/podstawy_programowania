@@ -20,18 +20,15 @@ void push(struct Stack *stos, int element)
     stos->head = nowy_pojemnik;
 }
 
-int pop(struct Stack *stos)
-{
-    if (stos->head == NULL)
-    {
-        printf("Error: Stos jest pusty!\n");
-        return -1;
+void pop(struct Stack* stos, int* element) {
+    if (stos->head == NULL) {
+        printf("Error: Stack is empty\n");
+        return;
     }
-    struct Pojemnik *pom = stos->head;
-    int element = pom->dane;
+    struct Pojemnik* pom = stos->head;
+    *element = pom->dane;
     stos->head = pom->nastepny;
     free(pom);
-    return element;
 }
 
 int empty(struct Stack *stos)
@@ -60,4 +57,23 @@ void print(struct Stack *stos)
 void init(struct Stack *stos)
 {
     stos->head = NULL;
+}
+
+int main()
+{
+
+    int arg;
+    struct Stack stos_obj;
+    struct Stack *stos = &stos_obj;
+    init(stos);
+    arg = 7;
+    push(stos, arg);
+    arg = 14;
+    push(stos, arg);
+    print(stos);
+    arg = 7;
+    pop(stos, &arg);
+    print(stos);
+    printf("Zdjeta wartosc: %d\n",arg);
+return 0;
 }
