@@ -1,7 +1,7 @@
 $(CC) = gcc
 
 przetwarzanie2: main.o przetwarzanie.o opcje.o obsluga.o funkcje.h
-			$(CC) main.o przetwarzanie.o opcje.o -o przetwarzanie2
+			$(CC) main.o przetwarzanie.o opcje.o obsluga.o -o przetwarzanie2
 main.o: main.c funkcje.h
 		$(CC) -c main.c 
 
