@@ -1,0 +1,9 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/adam/podstawy-programowania/Lab5/sprawozdanie'
+cc -c main.c 
+cc -c przetwarzanie.c 
+cc -c opcje.c
+cc -c obsluga.c
+cc main.o przetwarzanie.o opcje.o obsluga.o -o przetwarzanie2
+make: Leaving directory '/home/adam/podstawy-programowania/Lab5/sprawozdanie'
+ 
