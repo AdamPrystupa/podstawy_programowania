@@ -55,3 +55,5 @@ int konturowanie3r(struct_obrazka *obrazek);
 int konturowanie3g(struct_obrazka *obrazek);
 int konturowanie3b(struct_obrazka *obrazek);
 int konturowanie3(struct_obrazka *obrazek);
+int zapis_temp2(t_opcje *opcje, struct_obrazka *obrazek);
+int zapis_temp3(t_opcje *opcje, struct_obrazka *obrazek);

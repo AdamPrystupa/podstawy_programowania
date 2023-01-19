@@ -65,8 +65,10 @@ int zapisz(t_opcje *opcje, struct_obrazka *obrazek)
 
     /*zapisanie na poczatku pliku nr_magicznego, wymiarow, szarosci i ewentualnych komentarzy*/
     fprintf(opcje->plik_wy, "P%d\n", obrazek->nr_magiczny);
+    // printf("P% d\n ", obrazek->nr_magiczny);
     fprintf(opcje->plik_wy, "# Plik formatowany poprzez program PRZETWARZANIE\n");
     fprintf(opcje->plik_wy, "%d %d\n", obrazek->wym_x, obrazek->wym_y);
+    // printf("% d %d\n ", obrazek->wym_x, obrazek->wym_y);
     fprintf(opcje->plik_wy, "%d\n", obrazek->szarosci);
 
     /*zapis kolenych pikseli*/

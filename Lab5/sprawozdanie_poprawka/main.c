@@ -39,9 +39,27 @@ int main(int argc, char **argv)
             fprintf(stderr, "BLAD: Progowanie nie powiodlo sie!");
     }
 
-    zapisz(&opcje, &obrazek);
     if (opcje.wyswietlenie == 1)
-        wyswietl(&opcje);
+    {
+        if (opcje.plik_wy == stdout) /*W przypadku kiedy użytkownik chce wyswietlic plik ale go nie zapisywać*/
+        {
+            if (obrazek.nr_magiczny == 2)
+                zapis_temp2(&opcje, &obrazek);
 
+            if (obrazek.nr_magiczny == 3)
+                zapis_temp3(&opcje, &obrazek);
+        }
+        else
+        {
+            zapisz(&opcje, &obrazek); /*Musi tu byc, zeby dalo sie wyswietlic nieedytowany plik*/
+            wyswietl(&opcje);
+        }
+    }
+    if (opcje.wyswietlenie == 0)
+    {
+        zapisz(&opcje, &obrazek);
+    }
+
+    // free(obrazek.piksele);
     return kod_bledu;
 }
