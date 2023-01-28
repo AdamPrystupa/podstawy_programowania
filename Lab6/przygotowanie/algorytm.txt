@@ -1,5 +1,7 @@
 1. Inicjalizacja pustego stosu.
 2. Czytanie danych wejściowych ze standardowego wejścia.
+    Dopóku dane wejściowe to q wykonuj:
+    {
     - Jeśli dane wejściowe to liczba, umieszczenie jej na początku listy argumentów (stosu).
     - Jeśli dane wejściowe to symbol operacji (+, -, *, /, P, c, r, d, p, f):
     - Jeśli symbol to P, usunięcie ostatnio wprowadzonej liczby ze szczytu stosu.
@@ -13,5 +15,6 @@
         -- Pobranie dwóch elementów z początku listy (stosu)
         -- Wykonanie na nich odpowiedniego działania (+, -, *, /)
         -- Umieszczenie wyniku na początku listy (stosu)
+    }
 3. Powtarzanie kroków 2-4, aż do końca danych wejściowych.
 4. Zakończenie działania programu.
