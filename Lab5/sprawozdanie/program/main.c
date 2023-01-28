@@ -11,32 +11,52 @@ int main(int argc, char **argv)
     kod_bledu = przetwarzaj_opcje(argc, argv, &opcje);
 
     if (kod_bledu)
-        printf("Blad nr %d\n", kod_bledu);
+    {
+        {
+            printf("Blad nr %d\n", kod_bledu);
+            return 0;
+        }
+    }
     else if (czytaj(&opcje, &obrazek) != 0)
+    {
         fprintf(stderr, "BLAD: Wczytywanie nie udalo sie!");
+        return 0;
+    }
 
     if (opcje.nie_kolorowy == 1)
     {
         if (konwersja(&obrazek) != 0)
+        {
             fprintf(stderr, "BLAD: Konwersja do szarosci sie nie powiodla!");
+            return 0;
+        }
     }
 
     if (opcje.konturowanie == 1)
     {
         if (konturowanie(&obrazek, &opcje) != 0)
+        {
             fprintf(stderr, "BLAD: Konturowanie nie powiodlo sie!");
+            return 0;
+        }
     }
 
     if (opcje.negatyw == 1)
     {
         if (negatyw(&obrazek, &opcje) != 0)
+        {
             fprintf(stderr, "BLAD: Negatywowanie nie powiodlo sie!");
+            return 0;
+        }
     }
 
     if (opcje.progowanie == 1)
     {
         if (progowanie(&obrazek, &opcje) != 0)
+        {
             fprintf(stderr, "BLAD: Progowanie nie powiodlo sie!");
+            return 0;
+        }
     }
 
     if (opcje.wyswietlenie == 1)
@@ -60,6 +80,6 @@ int main(int argc, char **argv)
         zapisz(&opcje, &obrazek);
     }
 
-    // free(obrazek.piksele);
+    free(obrazek.piksele);
     return kod_bledu;
 }

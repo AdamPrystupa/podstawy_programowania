@@ -399,13 +399,16 @@ int konturowanie3(struct_obrazka *obrazek)
  ************************************************************************************/
 int zapis_temp2(t_opcje *opcje, struct_obrazka *obrazek)
 { /*dla P2 bedzie to temp.pgm*/
-    char *word;
+
     system("touch temp.pgm");
     opcje->do_wyswietlania = "temp.pgm";
+
     opcje->plik_wy = fopen("temp.pgm", "w");
     zapisz(opcje, obrazek); /*Musi tu byc, zeby bylo co wyswietlic w pliku*/
-    wyswietl(opcje);        /*Wyswietlamy pod strumieniem tymczasowym*/
+
+    wyswietl(opcje); /*Wyswietlamy pod strumieniem tymczasowym*/
     fclose(opcje->plik_wy);
+
     opcje->plik_wy = stdout; /*Przywracamy jak bylo*/
     zapisz(opcje, obrazek);
     system("rm -r temp.pgm ");
@@ -419,17 +422,13 @@ int zapis_temp3(t_opcje *opcje, struct_obrazka *obrazek)
 { /*dla P3 bedzie to temp.ppm*/
 
     system("touch temp.ppm");
-    printf("\n \n \n \n \n \n \n \n \n \n");
     opcje->do_wyswietlania = "temp.ppm";
-    printf("jestem tu 2\n");
 
     opcje->plik_wy = fopen("temp.ppm", "w");
     zapisz(opcje, obrazek); /*Musi tu byc, zeby zeby bylo co wyswietlic w pliku*/
-    printf("jestem tu 3\n");
 
     wyswietl(opcje); /*Wyswietlamy pod strumieniem tymczasowym*/
     fclose(opcje->plik_wy);
-    printf("jestem tu 4\n");
 
     opcje->plik_wy = stdout; /*Przywracamy jak bylo*/
     zapisz(opcje, obrazek);
