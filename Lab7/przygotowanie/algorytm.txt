@@ -1,0 +1,12 @@
+    1. Wczytanie pliku zawierającego dane i wzorca do wyszukania.
+    2. Iteracja po wszystkich liniach pliku i dla każdej z nich wykonanie poniższych kroków.
+    3. Utworzenie zmiennej ile_bledow zawierającej liczbę niedopasowań.
+    4. Iteracja po każdym znaku w linii i wzorcu.
+    5. Porównanie bieżącego znaku w linii i wzorcu.
+        Jeśli znaki są różne:
+            a. Zwiększenie liczby niedopasowań ile_bledow o 1.
+            b. Sprawdzenie, czy jest możliwe, że nastąpiła literówka, brak znaku, znak nadmiarowy lub czeski błąd.
+    6. Jeśli ile_bledow jest większe niż 2, przejście do kolejnej linii.
+    7. Jeśli ile_bledow jest mniejsze lub równe 2, wypisanie numeru linii i linii z zaznaczonym miejscem dopasowania.
+    8. Powtórzenie kroków 3-8 dla każdej następnej linii pliku.
+    9. Zakończenie działania programu.
